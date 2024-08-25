@@ -1,0 +1,7 @@
+name: yShopPlugin
+version: '1.2'
+api-version: 1.13
+main: pl.yshop.plugin.bungee.BungeePlugin
+description: Plugin for communication with yshop.pl
+website: https://yshop.pl
+author: 'yCode'

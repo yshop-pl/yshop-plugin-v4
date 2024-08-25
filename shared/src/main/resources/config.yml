@@ -1,0 +1,17 @@
+# Klucz API do autoryzacji licencji
+# Panel > Ustawienia > Klucz API
+apiKey: ''
+
+# ID serwera z panelu Panel > Serwery > Zarządzanie
+serverId: ''
+
+# Klucz serwera do generowania sygnatury
+# Panel > Serwery > Zarządzanie
+serverKey: ''
+
+# Link do serwera API
+apiUrl: 'https://api.yshop.pl/v4'
+
+# Tryb debugowania włącz tylko wtedy kiedy masz problemy z połączeniem
+# UWAGA! Tryb pokaże w konsoli wrażliwe informacje
+debug: false

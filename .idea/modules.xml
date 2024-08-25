@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bukkit/yShopPlugin.bukkit.main.iml" filepath="$PROJECT_DIR$/.idea/modules/bukkit/yShopPlugin.bukkit.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bungee/yShopPlugin.bungee.main.iml" filepath="$PROJECT_DIR$/.idea/modules/bungee/yShopPlugin.bungee.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bungee/yShopPlugin.bungee.test.iml" filepath="$PROJECT_DIR$/.idea/modules/bungee/yShopPlugin.bungee.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/yShopPlugin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/yShopPlugin.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/yShopPlugin.test.iml" filepath="$PROJECT_DIR$/.idea/modules/yShopPlugin.test.iml" />
+    </modules>
+  </component>
+</project>
