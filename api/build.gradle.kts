@@ -1,19 +1,28 @@
 plugins {
-    id("java")
+    `maven-publish`
 }
 
-group = "pl.yshop.plugin.api"
-version = "4.0.0"
-
-repositories {
-    mavenCentral()
+publishing {
+    repositories {
+        maven {
+            name = "yCodeRepository"
+            url = uri("https://repository.ycode.pl/releases")
+            credentials(PasswordCredentials::class)
+            authentication {
+                create<BasicAuthentication>("basic")
+            }
+        }
+    }
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "pl.yshop.plugin"
+            artifactId = "api"
+            version = "4.0.0"
+            from(components["java"])
+        }
+    }
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-}
 
-tasks.test {
-    useJUnitPlatform()
 }

@@ -1,6 +1,7 @@
 package pl.yshop.plugin.extensions;
 
 import org.yaml.snakeyaml.Yaml;
+import pl.yshop.plugin.api.Extension;
 import pl.yshop.plugin.shared.configuration.PluginConfiguration;
 import pl.yshop.plugin.shared.logger.YShopLogger;
 
@@ -17,7 +18,7 @@ public class ExtensionsLoader {
     private final File extensionDir;
     private final YShopLogger logger;
     private final PluginConfiguration configuration;
-    private final Set<YShopExtension> extensions = new HashSet<>();
+    private final Set<Extension> extensions = new HashSet<>();
     private final Set<Class<?>> loadedClasses = new HashSet<>();
 
     public ExtensionsLoader(File dataFolder, YShopLogger logger, PluginConfiguration configuration) {
@@ -62,7 +63,7 @@ public class ExtensionsLoader {
             try {
                 Object object = clazz.getDeclaredConstructor().newInstance();
                 if (object instanceof YShopLogger) {
-                    YShopExtension extension = (YShopExtension) object;
+                    Extension extension = (Extension) object;
                     extension.onEnable();
                     this.extensions.add(extension);
                     this.logger.info(String.format("Extension %s successfully enabled!", extension.getExtensionName()));
@@ -74,7 +75,7 @@ public class ExtensionsLoader {
         this.logger.info(String.format("Successfully enabled %s extensions!", this.extensions.size()));
     }
     public void disable() {
-        this.extensions.forEach(YShopExtension::onDisable);
+        this.extensions.forEach(Extension::onDisable);
         this.logger.info(String.format("Successfully disabled %s extensions!", this.extensions.size()));
         this.extensions.clear();
         this.loadedClasses.clear();

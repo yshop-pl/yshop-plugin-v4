@@ -1,6 +1,6 @@
-package pl.yshop.plugin.extensions;
+package pl.yshop.plugin.api;
 
-public abstract class YShopExtension {
+public abstract class Extension {
     public abstract void onEnable();
 
     public abstract void onDisable();
