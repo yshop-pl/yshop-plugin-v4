@@ -9,5 +9,4 @@ rootProject.name = "yShopPlugin"
 include("bukkit")
 include("shared")
 include("bungee")
-include("extensions")
 include("api")

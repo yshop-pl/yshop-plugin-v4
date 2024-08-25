@@ -5,40 +5,35 @@ import org.bukkit.plugin.java.JavaPlugin;
 import pl.yshop.plugin.bukkit.impl.BukkitConfigurationImpl;
 import pl.yshop.plugin.bukkit.impl.BukkitLoggerImpl;
 import pl.yshop.plugin.bukkit.impl.BukkitTaskImpl;
-import pl.yshop.plugin.extensions.ExtensionsLoader;
-import pl.yshop.plugin.shared.configuration.PluginConfiguration;
-import pl.yshop.plugin.shared.logger.YShopLogger;
+import pl.yshop.plugin.shared.Bootstrap;
 import pl.yshop.plugin.shared.platform.Platform;
-import pl.yshop.plugin.shared.request.YShopRequest;
 
 public class BukkitPlugin extends JavaPlugin implements Platform {
-    private YShopRequest request;
-    private ExtensionsLoader extensionsLoader;
+    private Bootstrap bootstrap;
 
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
-        PluginConfiguration configuration = new PluginConfiguration(new BukkitConfigurationImpl(this));
-        YShopLogger logger = new BukkitLoggerImpl(this.getLogger());
-        this.request = new YShopRequest(configuration, this, logger);
+        this.bootstrap = new Bootstrap()
+                .withConfiguration(new BukkitConfigurationImpl(this))
+                .withLogger(new BukkitLoggerImpl(this.getLogger()))
+                .withPlatform(this)
+                .withRequests()
+                .enableExtensions(this.getDataFolder())
+                .start();
 
         this.getServer().getScheduler().runTaskTimerAsynchronously(
                 this,
-                new BukkitTaskImpl(this.request, this),
+                new BukkitTaskImpl(this.bootstrap.request, this),
                 0L,
-                configuration.taskInterval.getSeconds() * 20L
+                this.bootstrap.configuration.taskInterval.getSeconds() * 20L
         );
-
-        this.extensionsLoader = new ExtensionsLoader(this.getDataFolder(), logger, configuration);
-        this.extensionsLoader.load();
-        this.extensionsLoader.enable();
     }
 
     @Override
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);
-        this.request.shutdown();
-        this.extensionsLoader.disable();
+        this.bootstrap.stop();
     }
 
     @Override

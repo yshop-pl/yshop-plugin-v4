@@ -1,11 +1,14 @@
-package pl.yshop.plugin.extensions;
+package pl.yshop.plugin.shared;
 
 import org.yaml.snakeyaml.Yaml;
 import pl.yshop.plugin.api.Extension;
 import pl.yshop.plugin.shared.configuration.PluginConfiguration;
 import pl.yshop.plugin.shared.logger.YShopLogger;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -62,8 +65,7 @@ public class ExtensionsLoader {
         for (Class<?> clazz : this.loadedClasses) {
             try {
                 Object object = clazz.getDeclaredConstructor().newInstance();
-                if (object instanceof YShopLogger) {
-                    Extension extension = (Extension) object;
+                if (object instanceof Extension extension) {
                     extension.onEnable();
                     this.extensions.add(extension);
                     this.logger.info(String.format("Extension %s successfully enabled!", extension.getExtensionName()));
