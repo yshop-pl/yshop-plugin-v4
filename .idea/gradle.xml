@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/api" />
             <option value="$PROJECT_DIR$/bukkit" />
             <option value="$PROJECT_DIR$/bungee" />
+            <option value="$PROJECT_DIR$/commands-api" />
             <option value="$PROJECT_DIR$/shared" />
           </set>
         </option>

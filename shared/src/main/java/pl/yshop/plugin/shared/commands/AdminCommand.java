@@ -1,8 +1,8 @@
-package pl.yshop.plugin.shared.commands.executors;
+package pl.yshop.plugin.shared.commands;
 
+import pl.yshop.plugin.commands.PlatformCommand;
+import pl.yshop.plugin.commands.PlatformSender;
 import pl.yshop.plugin.shared.Bootstrap;
-import pl.yshop.plugin.shared.commands.PlatformCommand;
-import pl.yshop.plugin.shared.commands.PlatformSender;
 
 public class AdminCommand extends PlatformCommand {
     private final Bootstrap bootstrap;

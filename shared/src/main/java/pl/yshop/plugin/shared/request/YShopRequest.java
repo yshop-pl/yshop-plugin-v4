@@ -5,8 +5,8 @@ import com.google.gson.JsonSyntaxException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import pl.yshop.plugin.api.PlatformLogger;
 import pl.yshop.plugin.shared.configuration.PluginConfiguration;
-import pl.yshop.plugin.shared.logger.YShopLogger;
 import pl.yshop.plugin.shared.platform.Platform;
 
 import java.io.IOException;
@@ -15,10 +15,10 @@ public class YShopRequest {
     private final Gson gson = new Gson();
     private final PluginConfiguration configuration;
     private final Platform platform;
-    public final YShopLogger logger;
+    public final PlatformLogger logger;
     private final OkHttpClient httpClient = new OkHttpClient.Builder().build();
 
-    public YShopRequest(PluginConfiguration config, Platform platform, YShopLogger logger) {
+    public YShopRequest(PluginConfiguration config, Platform platform, PlatformLogger logger) {
         this.configuration = config;
         this.platform = platform;
         this.logger = logger;

@@ -1,4 +1,4 @@
-package pl.yshop.plugin.shared.commands;
+package pl.yshop.plugin.commands;
 
 public abstract class PlatformCommand {
     public abstract String getName();

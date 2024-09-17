@@ -24,5 +24,5 @@ publishing {
 }
 
 dependencies {
-
+    api(project(":commands-api"))
 }

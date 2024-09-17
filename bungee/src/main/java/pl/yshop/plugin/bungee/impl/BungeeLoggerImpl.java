@@ -1,9 +1,9 @@
 package pl.yshop.plugin.bungee.impl;
 
-import pl.yshop.plugin.shared.logger.YShopLogger;
+import pl.yshop.plugin.api.PlatformLogger;
 import java.util.logging.Logger;
 
-public class BungeeLoggerImpl implements YShopLogger {
+public class BungeeLoggerImpl implements PlatformLogger {
     private final Logger logger;
 
     public BungeeLoggerImpl(final Logger logger) {

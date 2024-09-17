@@ -1,9 +1,10 @@
 package pl.yshop.plugin.bukkit.impl;
 
-import pl.yshop.plugin.shared.logger.YShopLogger;
+import pl.yshop.plugin.api.PlatformLogger;
+
 import java.util.logging.Logger;
 
-public class BukkitLoggerImpl implements YShopLogger {
+public class BukkitLoggerImpl implements PlatformLogger {
     private final Logger logger;
 
     public BukkitLoggerImpl(final Logger logger) {

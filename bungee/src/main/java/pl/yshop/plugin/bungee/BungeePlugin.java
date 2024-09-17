@@ -1,11 +1,11 @@
 package pl.yshop.plugin.bungee;
 
 import net.md_5.bungee.api.plugin.Plugin;
+import pl.yshop.plugin.api.PlatformLogger;
 import pl.yshop.plugin.bungee.impl.BungeeConfigurationImpl;
 import pl.yshop.plugin.bungee.impl.BungeeLoggerImpl;
 import pl.yshop.plugin.bungee.impl.BungeeTaskImpl;
 import pl.yshop.plugin.shared.configuration.PluginConfiguration;
-import pl.yshop.plugin.shared.logger.YShopLogger;
 import pl.yshop.plugin.shared.platform.Platform;
 import pl.yshop.plugin.shared.request.YShopRequest;
 
@@ -22,7 +22,7 @@ public class BungeePlugin extends Plugin implements Platform {
         PluginConfiguration configuration = new PluginConfiguration(
                 new BungeeConfigurationImpl(configManager.getConfiguration())
         );
-        YShopLogger logger = new BungeeLoggerImpl(this.getLogger());
+        PlatformLogger logger = new BungeeLoggerImpl(this.getLogger());
         this.request = new YShopRequest(configuration, this, logger);
 
         this.getProxy().getScheduler().schedule(

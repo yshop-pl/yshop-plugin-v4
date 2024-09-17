@@ -2,13 +2,14 @@ package pl.yshop.plugin.shared;
 
 import org.yaml.snakeyaml.Yaml;
 import pl.yshop.plugin.api.Extension;
+import pl.yshop.plugin.api.PlatformLogger;
 import pl.yshop.plugin.shared.configuration.PluginConfiguration;
-import pl.yshop.plugin.shared.logger.YShopLogger;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -19,16 +20,18 @@ import java.util.zip.ZipFile;
 
 public class ExtensionsLoader {
     private final File extensionDir;
-    private final YShopLogger logger;
+    private final PlatformLogger logger;
     private final PluginConfiguration configuration;
     private final Set<Extension> extensions = new HashSet<>();
     private final Set<Class<?>> loadedClasses = new HashSet<>();
+    private final Bootstrap bootstrap;
 
-    public ExtensionsLoader(File dataFolder, YShopLogger logger, PluginConfiguration configuration) {
+    public ExtensionsLoader(File dataFolder, PlatformLogger logger, PluginConfiguration configuration, Bootstrap bootstrap) {
         this.extensionDir = new File(dataFolder.getPath(), "extensions");
         this.extensionDir.mkdirs();
         this.logger = logger;
         this.configuration = configuration;
+        this.bootstrap = bootstrap;
     }
 
     public void load() {
@@ -64,8 +67,11 @@ public class ExtensionsLoader {
     public void enable() {
         for (Class<?> clazz : this.loadedClasses) {
             try {
+//                Constructor<?> constructor = clazz.getConstructor(Bootstrap.class);
+//                Object object = constructor.newInstance(this.bootstrap);
                 Object object = clazz.getDeclaredConstructor().newInstance();
                 if (object instanceof Extension extension) {
+                    extension.init(this.logger, this.bootstrap.commandManager);
                     extension.onEnable();
                     this.extensions.add(extension);
                     this.logger.info(String.format("Extension %s successfully enabled!", extension.getExtensionName()));

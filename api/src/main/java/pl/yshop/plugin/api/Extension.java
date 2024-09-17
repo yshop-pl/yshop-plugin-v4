@@ -1,15 +1,27 @@
 package pl.yshop.plugin.api;
 
+import pl.yshop.plugin.commands.PlatformCommand;
+import pl.yshop.plugin.commands.PlatformCommandManager;
+
 public abstract class Extension {
-    public abstract void onEnable();
+    private PlatformLogger logger;
+    private PlatformCommandManager commandManager;
 
-    public abstract void onDisable();
-
-    public final String getExtensionName() {
-        return getClass().getSimpleName();
+    public void init(PlatformLogger logger, PlatformCommandManager commandManager) {
+        this.logger = logger;
+        this.commandManager = commandManager;
     }
 
-    private void registerCommand() {
+    public abstract void onEnable();
+    public abstract void onDisable();
 
+    public void registerCommand(PlatformCommand command) {
+        this.commandManager.registerCommand(command);
+    }
+    public PlatformLogger getLogger() {
+        return this.logger;
+    }
+    public final String getExtensionName() {
+        return getClass().getSimpleName();
     }
 }

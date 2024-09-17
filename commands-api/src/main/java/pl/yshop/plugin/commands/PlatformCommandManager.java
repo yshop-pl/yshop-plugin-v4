@@ -1,4 +1,4 @@
-package pl.yshop.plugin.shared.commands;
+package pl.yshop.plugin.commands;
 
 public interface PlatformCommandManager {
     void registerCommand(PlatformCommand command);

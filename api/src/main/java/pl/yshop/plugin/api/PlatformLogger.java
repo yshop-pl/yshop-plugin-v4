@@ -1,6 +1,6 @@
-package pl.yshop.plugin.shared.logger;
+package pl.yshop.plugin.api;
 
-public interface YShopLogger {
+public interface PlatformLogger {
     void info(String message);
     void error(String message);
     void debug(String message);

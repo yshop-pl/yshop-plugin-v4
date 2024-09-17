@@ -1,24 +1,24 @@
 package pl.yshop.plugin.shared;
 
-import pl.yshop.plugin.shared.commands.PlatformCommandManager;
-import pl.yshop.plugin.shared.commands.executors.AdminCommand;
+import pl.yshop.plugin.api.PlatformLogger;
+import pl.yshop.plugin.commands.PlatformCommandManager;
+import pl.yshop.plugin.shared.commands.AdminCommand;
 import pl.yshop.plugin.shared.configuration.ConfigProperties;
 import pl.yshop.plugin.shared.configuration.PluginConfiguration;
-import pl.yshop.plugin.shared.logger.YShopLogger;
 import pl.yshop.plugin.shared.platform.Platform;
 import pl.yshop.plugin.shared.request.YShopRequest;
 
 import java.io.File;
 
 public class Bootstrap {
-    private YShopLogger logger;
+    private PlatformLogger logger;
     public PluginConfiguration configuration;
     public YShopRequest request;
     public Platform platform;
     public ExtensionsLoader extensionsLoader;
-    private PlatformCommandManager commandManager;
+    public PlatformCommandManager commandManager;
 
-    public Bootstrap withLogger(YShopLogger logger) {
+    public Bootstrap withLogger(PlatformLogger logger) {
         this.logger = logger;
         return this;
     }
@@ -35,7 +35,7 @@ public class Bootstrap {
         return this;
     }
     public Bootstrap enableExtensions(File dataFolder) {
-        this.extensionsLoader = new ExtensionsLoader(dataFolder, this.logger, this.configuration);
+        this.extensionsLoader = new ExtensionsLoader(dataFolder, this.logger, this.configuration, this);
         return this;
     }
 
@@ -43,7 +43,6 @@ public class Bootstrap {
         this.commandManager = platformCommandManager;
         return this;
     }
-
 
     public Bootstrap start() {
         this.extensionsLoader.load();
@@ -60,7 +59,6 @@ public class Bootstrap {
         this.request.shutdown();
         this.extensionsLoader.disable();
     }
-
 
     public ExtensionsLoader getExtensionsLoader() {
         return this.extensionsLoader;
