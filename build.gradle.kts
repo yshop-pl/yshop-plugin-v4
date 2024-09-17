@@ -22,6 +22,7 @@ allprojects {
     repositories {
         mavenCentral()
         maven("https://oss.sonatype.org/content/groups/public/")
+        maven("https://repo.panda-lang.org/releases")
     }
 
     tasks {

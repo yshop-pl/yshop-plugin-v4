@@ -82,4 +82,8 @@ public class ExtensionsLoader {
         this.extensions.clear();
         this.loadedClasses.clear();
     }
+
+    public Set<Extension> getExtensions() {
+        return this.extensions;
+    }
 }

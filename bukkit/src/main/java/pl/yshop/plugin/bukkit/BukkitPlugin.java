@@ -2,6 +2,7 @@ package pl.yshop.plugin.bukkit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.yshop.plugin.bukkit.commands.BukkitCommandManager;
 import pl.yshop.plugin.bukkit.impl.BukkitConfigurationImpl;
 import pl.yshop.plugin.bukkit.impl.BukkitLoggerImpl;
 import pl.yshop.plugin.bukkit.impl.BukkitTaskImpl;
@@ -19,6 +20,7 @@ public class BukkitPlugin extends JavaPlugin implements Platform {
                 .withLogger(new BukkitLoggerImpl(this.getLogger()))
                 .withPlatform(this)
                 .withRequests()
+                .withCommandManager(new BukkitCommandManager())
                 .enableExtensions(this.getDataFolder())
                 .start();
 

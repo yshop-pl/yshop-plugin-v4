@@ -7,6 +7,7 @@ version = "4.0.0"
 
 repositories {
     mavenCentral()
+    maven("https://repo.panda-lang.org/releases")
 }
 
 dependencies {
