@@ -1,35 +1,40 @@
 package pl.yshop.plugin.shared;
 
-import org.yaml.snakeyaml.Yaml;
+import com.google.gson.Gson;
 import pl.yshop.plugin.api.Extension;
 import pl.yshop.plugin.api.PlatformLogger;
 import pl.yshop.plugin.shared.configuration.PluginConfiguration;
+import pl.yshop.plugin.shared.entities.ExtensionConfig;
+import pl.yshop.plugin.shared.platform.Platform;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class ExtensionsLoader {
     private final File extensionDir;
     private final PlatformLogger logger;
+    private final Platform platform;
     private final PluginConfiguration configuration;
-    private final Set<Extension> extensions = new HashSet<>();
+    public final Set<Extension> extensions = new HashSet<>();
     private final Set<Class<?>> loadedClasses = new HashSet<>();
     private final Bootstrap bootstrap;
 
-    public ExtensionsLoader(File dataFolder, PlatformLogger logger, PluginConfiguration configuration, Bootstrap bootstrap) {
-        this.extensionDir = new File(dataFolder.getPath(), "extensions");
-        this.extensionDir.mkdirs();
+    public ExtensionsLoader(File dataFolder, Platform platform, PlatformLogger logger, PluginConfiguration configuration, Bootstrap bootstrap) {
         this.logger = logger;
+        this.platform = platform;
+        this.extensionDir = new File(dataFolder.getPath(), "extensions");
+        if (this.extensionDir.mkdirs()) {
+            this.logger.info("Created extensions directory!");
+        }
         this.configuration = configuration;
         this.bootstrap = bootstrap;
     }
@@ -42,12 +47,19 @@ public class ExtensionsLoader {
             for (File file : files) {
                 try {
                     ZipFile zipFile = new ZipFile(file);
-                    InputStream inputStream = zipFile.getInputStream(zipFile.getEntry("extension.yml"));
+                    ZipEntry entry = zipFile.getEntry("extension.json");
+                    if (entry == null) {
+                        this.logger.error("Extension file " + file.getName() + " doesn't have extension.json!");
+                        continue;
+                    }
 
-                    Yaml yaml = new Yaml();
-                    Map<String, Object> data = yaml.load(new InputStreamReader(inputStream));
-                    if (!data.containsKey("main_class")) throw new ClassNotFoundException();
-                    mainClass = data.get("main_class").toString();
+                    InputStream inputStream = zipFile.getInputStream(entry);
+
+                    ExtensionConfig config = new Gson().fromJson(new InputStreamReader(inputStream), ExtensionConfig.class);
+                    if (config.getMainClass() == null) throw new ClassNotFoundException();
+                    mainClass = config.getMainClass();
+
+                    if (!config.getSupportedPlatforms().contains(this.platform.engine())) continue;
 
                     ClassLoader loader = URLClassLoader.newInstance(new URL[]{file.toURI().toURL()}, this.getClass().getClassLoader());
                     Class<?> clazz = loader.loadClass(mainClass);
@@ -56,7 +68,7 @@ public class ExtensionsLoader {
                     this.logger.error("Invalid extension " + file.getName());
                     if (this.configuration.debug) e.printStackTrace();
                 } catch (ClassNotFoundException e) {
-                    this.logger.error("Class not found! Wrong main defined in extension.yml?: " + file.getName() + " class: " + mainClass);
+                    this.logger.error("Class not found! Wrong main defined in extension.json?: " + file.getName() + " class: " + mainClass);
                     if (this.configuration.debug) e.printStackTrace();
                 }
             }
@@ -67,8 +79,6 @@ public class ExtensionsLoader {
     public void enable() {
         for (Class<?> clazz : this.loadedClasses) {
             try {
-//                Constructor<?> constructor = clazz.getConstructor(Bootstrap.class);
-//                Object object = constructor.newInstance(this.bootstrap);
                 Object object = clazz.getDeclaredConstructor().newInstance();
                 if (object instanceof Extension extension) {
                     extension.init(this.logger, this.bootstrap.commandManager);
@@ -87,9 +97,5 @@ public class ExtensionsLoader {
         this.logger.info(String.format("Successfully disabled %s extensions!", this.extensions.size()));
         this.extensions.clear();
         this.loadedClasses.clear();
-    }
-
-    public Set<Extension> getExtensions() {
-        return this.extensions;
     }
 }
