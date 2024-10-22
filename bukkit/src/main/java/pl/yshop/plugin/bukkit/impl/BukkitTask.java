@@ -5,10 +5,10 @@ import org.bukkit.plugin.Plugin;
 import pl.yshop.plugin.shared.request.YShopRequest;
 import pl.yshop.plugin.shared.tasks.ExecuteCommandsTask;
 
-public class BukkitTaskImpl extends ExecuteCommandsTask {
+public class BukkitTask extends ExecuteCommandsTask {
     private final Plugin plugin;
 
-    public BukkitTaskImpl(YShopRequest requester, Plugin plugin) {
+    public BukkitTask(YShopRequest requester, Plugin plugin) {
         super(requester);
         this.plugin = plugin;
     }

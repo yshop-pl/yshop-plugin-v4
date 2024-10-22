@@ -16,7 +16,7 @@ public abstract class Extension {
     public abstract void onDisable();
 
     public void registerCommand(PlatformCommand command) {
-        this.commandManager.registerCommand(command);
+        this.commandManager.register(command);
     }
     public PlatformLogger getLogger() {
         return this.logger;

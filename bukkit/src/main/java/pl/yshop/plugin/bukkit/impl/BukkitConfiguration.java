@@ -3,10 +3,10 @@ package pl.yshop.plugin.bukkit.impl;
 import org.bukkit.plugin.Plugin;
 import pl.yshop.plugin.shared.configuration.ConfigProperties;
 
-public class BukkitConfigurationImpl implements ConfigProperties {
+public class BukkitConfiguration implements ConfigProperties {
     private final Plugin plugin;
 
-    public BukkitConfigurationImpl(Plugin plugin) {
+    public BukkitConfiguration(Plugin plugin) {
         this.plugin = plugin;
     }
 

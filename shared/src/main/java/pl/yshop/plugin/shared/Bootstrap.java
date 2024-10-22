@@ -11,12 +11,16 @@ import pl.yshop.plugin.shared.request.YShopRequest;
 import java.io.File;
 
 public class Bootstrap {
+    private final Platform platform;
     private PlatformLogger logger;
     public PluginConfiguration configuration;
     public YShopRequest request;
-    public Platform platform;
     public ExtensionsLoader extensionsLoader;
-    public PlatformCommandManager commandManager;
+    public PlatformCommandManager<?> commandManager;
+
+    public Bootstrap(Platform platform) {
+        this.platform = platform;
+    }
 
     public Bootstrap withLogger(PlatformLogger logger) {
         this.logger = logger;
@@ -26,30 +30,24 @@ public class Bootstrap {
         this.configuration = new PluginConfiguration(properties);
         return this;
     }
-    public Bootstrap withPlatform(Platform platform) {
-        this.platform = platform;
-        return this;
-    }
-    public Bootstrap withRequests() {
-        this.request = new YShopRequest(this.configuration, this.platform, this.logger);
-        return this;
-    }
     public Bootstrap enableExtensions(File dataFolder) {
-        this.extensionsLoader = new ExtensionsLoader(dataFolder, this.logger, this.configuration, this);
+        this.extensionsLoader = new ExtensionsLoader(dataFolder, this.platform, this.logger, this.configuration, this);
         return this;
     }
 
-    public Bootstrap withCommandManager(PlatformCommandManager platformCommandManager) {
+    public Bootstrap withCommandManager(PlatformCommandManager<?> platformCommandManager) {
         this.commandManager = platformCommandManager;
         return this;
     }
 
     public Bootstrap start() {
+        this.request = new YShopRequest(this.configuration, this.platform, this.logger);
+
         this.extensionsLoader.load();
         this.extensionsLoader.enable();
 
         if (this.commandManager != null) {
-            this.commandManager.registerCommand(new AdminCommand(this));
+            this.commandManager.register(new AdminCommand(this));
         }
 
         return this;

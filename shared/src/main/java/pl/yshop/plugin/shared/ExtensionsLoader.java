@@ -87,6 +87,7 @@ public class ExtensionsLoader {
                     this.logger.info(String.format("Extension %s successfully enabled!", extension.getExtensionName()));
                 }
             } catch (InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException e) {
+                this.logger.error("Can't enable extension " + clazz.getName());
                 e.printStackTrace();
             }
         }

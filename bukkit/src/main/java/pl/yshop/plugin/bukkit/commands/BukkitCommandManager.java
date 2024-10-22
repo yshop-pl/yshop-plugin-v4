@@ -7,14 +7,11 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import pl.yshop.plugin.commands.PlatformCommand;
 import pl.yshop.plugin.commands.PlatformCommandManager;
-import pl.yshop.plugin.commands.annotations.Execute;
+import pl.yshop.plugin.commands.PlatformSender;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
 
-public class BukkitCommandManager implements PlatformCommandManager {
+public class BukkitCommandManager extends PlatformCommandManager<CommandSender> {
     private CommandMap commandMap;
 
     public BukkitCommandManager() {
@@ -28,28 +25,18 @@ public class BukkitCommandManager implements PlatformCommandManager {
     }
 
     @Override
-    public void registerCommand(PlatformCommand command) {
-        pl.yshop.plugin.commands.annotations.Command annotation = command.getClass().getAnnotation(pl.yshop.plugin.commands.annotations.Command.class);
-        if (annotation != null) {
-            this.commandMap.register(annotation.name(), new Command(annotation.name()) {
-                @Override
-                public boolean execute(@NotNull CommandSender commandSender, @NotNull String s, @NotNull String[] strings) {
-                    Method method = Arrays.stream(command.getClass().getDeclaredMethods()).filter(it -> {
-                        Execute execute = it.getDeclaredAnnotation(Execute.class);
-                        if (strings.length <= 0) return true;
-                        return execute.name().equals(strings[0]);
-                    }).findFirst().orElse(null);
-                    if (method != null) {
-                        method.setAccessible(true);
-                        try {
-                            method.invoke(command, new BukkitSender(commandSender));
-                        } catch (IllegalAccessException | InvocationTargetException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                    return false;
-                }
-            });
-        }
+    public PlatformSender sender(CommandSender commandSender) {
+        return new BukkitSender(commandSender);
+    }
+
+    @Override
+    public void register(PlatformCommand command) {
+        String name = this.command(command).name();
+        this.commandMap.register(name, new Command(name) {
+            @Override
+            public boolean execute(@NotNull CommandSender commandSender, @NotNull String s, @NotNull String[] strings) {
+                return registerCommand(commandSender, command, strings);
+            }
+        });
     }
 }

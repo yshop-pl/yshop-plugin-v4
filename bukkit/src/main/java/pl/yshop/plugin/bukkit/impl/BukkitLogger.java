@@ -4,10 +4,10 @@ import pl.yshop.plugin.api.PlatformLogger;
 
 import java.util.logging.Logger;
 
-public class BukkitLoggerImpl implements PlatformLogger {
+public class BukkitLogger implements PlatformLogger {
     private final Logger logger;
 
-    public BukkitLoggerImpl(final Logger logger) {
+    public BukkitLogger(final Logger logger) {
         this.logger = logger;
     }
 
