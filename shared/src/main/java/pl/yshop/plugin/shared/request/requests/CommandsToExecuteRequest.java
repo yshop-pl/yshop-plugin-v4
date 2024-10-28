@@ -7,7 +7,7 @@ import pl.yshop.plugin.shared.request.BaseRequest;
 public class CommandsToExecuteRequest implements BaseRequest<Command[]> {
     @Override
     public String path() {
-        return "/commands";
+        return "/server/{serverId}/commands";
     }
 
     @Override

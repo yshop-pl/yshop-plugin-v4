@@ -1,11 +1,11 @@
 package pl.yshop.plugin.shared;
 
 import com.google.gson.Gson;
+import pl.yshop.plugin.api.Configuration;
 import pl.yshop.plugin.api.Extension;
 import pl.yshop.plugin.api.PlatformLogger;
-import pl.yshop.plugin.shared.configuration.PluginConfiguration;
 import pl.yshop.plugin.shared.entities.ExtensionConfig;
-import pl.yshop.plugin.shared.platform.Platform;
+import pl.yshop.plugin.api.Platform;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,20 +23,18 @@ public class ExtensionsLoader {
     private final File extensionDir;
     private final PlatformLogger logger;
     private final Platform platform;
-    private final PluginConfiguration configuration;
+    private final Configuration configuration;
     public final Set<Extension> extensions = new HashSet<>();
     private final Set<Class<?>> loadedClasses = new HashSet<>();
-    private final Bootstrap bootstrap;
 
-    public ExtensionsLoader(File dataFolder, Platform platform, PlatformLogger logger, PluginConfiguration configuration, Bootstrap bootstrap) {
+    public ExtensionsLoader(File dataFolder, Platform platform, PlatformLogger logger, Bootstrap bootstrap) {
         this.logger = logger;
         this.platform = platform;
         this.extensionDir = new File(dataFolder.getPath(), "extensions");
         if (this.extensionDir.mkdirs()) {
             this.logger.info("Created extensions directory!");
         }
-        this.configuration = configuration;
-        this.bootstrap = bootstrap;
+        this.configuration = platform.getConfiguration();
     }
 
     public void load() {
@@ -56,6 +54,7 @@ public class ExtensionsLoader {
                     InputStream inputStream = zipFile.getInputStream(entry);
 
                     ExtensionConfig config = new Gson().fromJson(new InputStreamReader(inputStream), ExtensionConfig.class);
+
                     if (config.getMainClass() == null) throw new ClassNotFoundException();
                     mainClass = config.getMainClass();
 
@@ -66,10 +65,10 @@ public class ExtensionsLoader {
                     this.loadedClasses.add(clazz);
                 } catch (IOException e) {
                     this.logger.error("Invalid extension " + file.getName());
-                    if (this.configuration.debug) e.printStackTrace();
+                    if (this.configuration.debug()) e.printStackTrace();
                 } catch (ClassNotFoundException e) {
                     this.logger.error("Class not found! Wrong main defined in extension.json?: " + file.getName() + " class: " + mainClass);
-                    if (this.configuration.debug) e.printStackTrace();
+                    if (this.configuration.debug()) e.printStackTrace();
                 }
             }
         }
@@ -81,7 +80,7 @@ public class ExtensionsLoader {
             try {
                 Object object = clazz.getDeclaredConstructor().newInstance();
                 if (object instanceof Extension extension) {
-                    extension.init(this.logger, this.bootstrap.commandManager);
+                    extension.init(this.logger, this.platform);
                     extension.onEnable();
                     this.extensions.add(extension);
                     this.logger.info(String.format("Extension %s successfully enabled!", extension.getExtensionName()));

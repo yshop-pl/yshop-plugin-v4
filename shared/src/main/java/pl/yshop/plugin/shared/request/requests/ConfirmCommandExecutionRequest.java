@@ -1,13 +1,12 @@
 package pl.yshop.plugin.shared.request.requests;
 
-import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import pl.yshop.plugin.shared.request.BaseRequest;
 
 import static okhttp3.internal.Util.EMPTY_REQUEST;
 
 public class ConfirmCommandExecutionRequest implements BaseRequest<Void> {
-    private String commandId;
+    private final String commandId;
 
     public ConfirmCommandExecutionRequest(String commandId) {
         this.commandId = commandId;
@@ -15,7 +14,7 @@ public class ConfirmCommandExecutionRequest implements BaseRequest<Void> {
 
     @Override
     public String path() {
-        return "/commands/" + this.commandId;
+        return "/server/{serverId}/commands/" + this.commandId;
     }
 
     @Override

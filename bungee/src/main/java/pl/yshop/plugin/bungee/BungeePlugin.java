@@ -1,26 +1,33 @@
 package pl.yshop.plugin.bungee;
 
 import net.md_5.bungee.api.plugin.Plugin;
+import pl.yshop.plugin.api.Configuration;
 import pl.yshop.plugin.api.PlatformLogger;
 import pl.yshop.plugin.bungee.impl.BungeeConfigurationImpl;
 import pl.yshop.plugin.bungee.impl.BungeeLoggerImpl;
 import pl.yshop.plugin.bungee.impl.BungeeTaskImpl;
-import pl.yshop.plugin.shared.configuration.PluginConfiguration;
-import pl.yshop.plugin.shared.platform.Platform;
+import pl.yshop.plugin.shared.configuration.ConfigProperties;
+import pl.yshop.plugin.api.Platform;
 import pl.yshop.plugin.shared.request.YShopRequest;
 
 import java.util.concurrent.TimeUnit;
 
 public class BungeePlugin extends Plugin implements Platform {
     private YShopRequest request;
+    private Configuration configuration;
 
     @Override
     public void onEnable() {
         BungeeConfigurationManager configManager = new BungeeConfigurationManager(this);
         configManager.loadConfigurationFile();
 
-        PluginConfiguration configuration = new PluginConfiguration(
-                new BungeeConfigurationImpl(configManager.getConfiguration())
+        ConfigProperties properties = new BungeeConfigurationImpl(configManager.getConfiguration());
+        this.configuration = new Configuration(
+                properties.getString("serverId"),
+                properties.getString("serverKey"),
+                properties.getString("apiKey"),
+                properties.getString("apiUrl"),
+                properties.getBoolean("debug")
         );
         PlatformLogger logger = new BungeeLoggerImpl(this.getLogger());
         this.request = new YShopRequest(configuration, this, logger);
@@ -29,7 +36,7 @@ public class BungeePlugin extends Plugin implements Platform {
                 this,
                 new BungeeTaskImpl(this.request, this),
                 0L,
-                configuration.taskInterval.getSeconds(),
+                configuration.taskInterval().getSeconds(),
                 TimeUnit.SECONDS
         );
     }
@@ -48,5 +55,15 @@ public class BungeePlugin extends Plugin implements Platform {
     @Override
     public String engine() {
         return "BungeeCord";
+    }
+
+    @Override
+    public boolean isPluginEnabled(String name) {
+        return this.getProxy().getPluginManager().getPlugin(name) != null;
+    }
+
+    @Override
+    public Configuration getConfiguration() {
+        return null;
     }
 }

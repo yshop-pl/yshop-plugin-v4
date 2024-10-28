@@ -18,7 +18,8 @@ public abstract class PlatformCommandManager<SENDER> {
     public boolean registerCommand(SENDER sender, PlatformCommand command, String[] args) {
         Method method = Arrays.stream(command.getClass().getDeclaredMethods()).filter(it -> {
             Execute execute = it.getDeclaredAnnotation(Execute.class);
-            if (args.length <= 0) return true;
+            if (execute == null) return false;
+            if (args.length == 0) return true;
             return execute.name().equals(args[0]);
         }).findFirst().orElse(null);
         if (method != null) {
