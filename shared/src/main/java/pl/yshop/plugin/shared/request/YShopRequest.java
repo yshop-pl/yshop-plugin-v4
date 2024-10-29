@@ -31,7 +31,6 @@ public class YShopRequest implements Requester {
         this.httpClient.dispatcher().executorService().shutdown();
     }
 
-
     @Override
     public <T> T make(BaseRequest<T> baseRequest) throws RequestException {
         String requestPath = String.format("%s/public/license%s",

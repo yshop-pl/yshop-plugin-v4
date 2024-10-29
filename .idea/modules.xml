@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/bungee/yShopPlugin.bungee.test.iml" filepath="$PROJECT_DIR$/.idea/modules/bungee/yShopPlugin.bungee.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/yShopPlugin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/yShopPlugin.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/yShopPlugin.test.iml" filepath="$PROJECT_DIR$/.idea/modules/yShopPlugin.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/velocity/yShopPlugin.velocity.main.iml" filepath="$PROJECT_DIR$/.idea/modules/velocity/yShopPlugin.velocity.main.iml" />
     </modules>
   </component>
 </project>
