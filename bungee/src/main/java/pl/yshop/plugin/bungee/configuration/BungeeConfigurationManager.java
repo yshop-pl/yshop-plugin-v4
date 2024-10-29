@@ -1,4 +1,4 @@
-package pl.yshop.plugin.bungee;
+package pl.yshop.plugin.bungee.configuration;
 
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -12,7 +12,7 @@ import java.nio.file.Files;
 
 public class BungeeConfigurationManager {
     private static final String FILE_NAME = "config.yml";
-    private Plugin plugin;
+    private final Plugin plugin;
 
     public BungeeConfigurationManager(Plugin plugin){
         this.plugin = plugin;

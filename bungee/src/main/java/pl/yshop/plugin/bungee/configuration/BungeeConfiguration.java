@@ -1,12 +1,12 @@
-package pl.yshop.plugin.bungee.impl;
+package pl.yshop.plugin.bungee.configuration;
 
 import net.md_5.bungee.config.Configuration;
 import pl.yshop.plugin.shared.configuration.ConfigProperties;
 
-public class BungeeConfigurationImpl implements ConfigProperties {
+public class BungeeConfiguration implements ConfigProperties {
     private final Configuration configuration;
 
-    public BungeeConfigurationImpl(Configuration configuration) {
+    public BungeeConfiguration(Configuration configuration) {
         this.configuration = configuration;
     }
 

@@ -1,12 +1,12 @@
-package pl.yshop.plugin.bungee.impl;
+package pl.yshop.plugin.bungee;
 
 import pl.yshop.plugin.api.PlatformLogger;
 import java.util.logging.Logger;
 
-public class BungeeLoggerImpl implements PlatformLogger {
+public class BungeeLogger implements PlatformLogger {
     private final Logger logger;
 
-    public BungeeLoggerImpl(final Logger logger) {
+    public BungeeLogger(final Logger logger) {
         this.logger = logger;
     }
 
