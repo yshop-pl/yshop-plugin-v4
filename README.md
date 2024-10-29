@@ -1,4 +1,6 @@
 # yshop-plugin
+Plugin pozwalający na komunikacje z api yshop.pl
+
 ## Wspierane platformy
 - [X] Spigot/Bukkit
 - [X] BungeeCord
