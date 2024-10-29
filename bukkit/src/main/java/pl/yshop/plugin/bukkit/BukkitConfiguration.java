@@ -1,4 +1,4 @@
-package pl.yshop.plugin.bukkit.impl;
+package pl.yshop.plugin.bukkit;
 
 import org.bukkit.plugin.Plugin;
 import pl.yshop.plugin.shared.configuration.ConfigProperties;

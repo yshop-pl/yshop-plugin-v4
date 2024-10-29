@@ -21,10 +21,10 @@ public class YShopRequest implements Requester {
     public final PlatformLogger logger;
     private final OkHttpClient httpClient = new OkHttpClient.Builder().build();
 
-    public YShopRequest(Configuration config, Platform platform, PlatformLogger logger) {
-        this.configuration = config;
+    public YShopRequest(Platform platform) {
+        this.configuration = platform.getConfiguration();
         this.platform = platform;
-        this.logger = logger;
+        this.logger = platform.logger();
     }
 
     public void shutdown() {

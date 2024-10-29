@@ -1,4 +1,4 @@
-package pl.yshop.plugin.bukkit.impl;
+package pl.yshop.plugin.bukkit;
 
 import pl.yshop.plugin.api.PlatformLogger;
 

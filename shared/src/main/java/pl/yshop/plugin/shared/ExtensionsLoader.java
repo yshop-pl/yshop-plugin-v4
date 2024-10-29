@@ -27,8 +27,8 @@ public class ExtensionsLoader {
     public final Set<Extension> extensions = new HashSet<>();
     private final Set<Class<?>> loadedClasses = new HashSet<>();
 
-    public ExtensionsLoader(File dataFolder, Platform platform, PlatformLogger logger, Bootstrap bootstrap) {
-        this.logger = logger;
+    public ExtensionsLoader(File dataFolder, Platform platform) {
+        this.logger = platform.logger();
         this.platform = platform;
         this.extensionDir = new File(dataFolder.getPath(), "extensions");
         if (this.extensionDir.mkdirs()) {
