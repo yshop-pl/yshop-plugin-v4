@@ -1,4 +1,4 @@
-package pl.yshop.plugin.shared.request;
+package pl.yshop.plugin.api.request;
 
 import okhttp3.RequestBody;
 

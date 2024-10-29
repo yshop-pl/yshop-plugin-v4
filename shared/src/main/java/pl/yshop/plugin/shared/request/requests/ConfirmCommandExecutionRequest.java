@@ -1,7 +1,7 @@
 package pl.yshop.plugin.shared.request.requests;
 
 import okhttp3.RequestBody;
-import pl.yshop.plugin.shared.request.BaseRequest;
+import pl.yshop.plugin.api.request.BaseRequest;
 
 import static okhttp3.internal.Util.EMPTY_REQUEST;
 

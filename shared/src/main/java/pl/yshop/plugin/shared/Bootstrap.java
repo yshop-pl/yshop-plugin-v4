@@ -46,7 +46,7 @@ public class Bootstrap {
         return this;
     }
 
-    public Bootstrap start() {
+    public void start() {
         this.request = new YShopRequest(this.configuration, this.platform, this.logger);
 
         this.extensionsLoader.load();
@@ -56,7 +56,6 @@ public class Bootstrap {
             this.commandManager.register(new AdminCommand(this));
         }
 
-        return this;
     }
 
     public void stop() {

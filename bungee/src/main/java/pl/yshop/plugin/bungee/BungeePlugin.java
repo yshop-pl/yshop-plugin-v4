@@ -1,20 +1,25 @@
 package pl.yshop.plugin.bungee;
 
+import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.md_5.bungee.api.plugin.Plugin;
 import pl.yshop.plugin.api.Configuration;
 import pl.yshop.plugin.api.PlatformLogger;
+import pl.yshop.plugin.api.request.Requester;
 import pl.yshop.plugin.bungee.impl.BungeeConfigurationImpl;
 import pl.yshop.plugin.bungee.impl.BungeeLoggerImpl;
-import pl.yshop.plugin.bungee.impl.BungeeTaskImpl;
 import pl.yshop.plugin.shared.configuration.ConfigProperties;
 import pl.yshop.plugin.api.Platform;
 import pl.yshop.plugin.shared.request.YShopRequest;
+import pl.yshop.plugin.shared.tasks.ExecuteCommandsTask;
 
 import java.util.concurrent.TimeUnit;
 
 public class BungeePlugin extends Plugin implements Platform {
     private YShopRequest request;
     private Configuration configuration;
+    private final BungeeAudiences audiences = BungeeAudiences.create(this);
+    private final PlatformLogger logger = new BungeeLoggerImpl(this.getLogger());
 
     @Override
     public void onEnable() {
@@ -29,12 +34,11 @@ public class BungeePlugin extends Plugin implements Platform {
                 properties.getString("apiUrl"),
                 properties.getBoolean("debug")
         );
-        PlatformLogger logger = new BungeeLoggerImpl(this.getLogger());
         this.request = new YShopRequest(configuration, this, logger);
 
         this.getProxy().getScheduler().schedule(
                 this,
-                new BungeeTaskImpl(this.request, this),
+                new ExecuteCommandsTask(this),
                 0L,
                 configuration.taskInterval().getSeconds(),
                 TimeUnit.SECONDS
@@ -63,7 +67,34 @@ public class BungeePlugin extends Plugin implements Platform {
     }
 
     @Override
+    public boolean isPlayerOnline(String nickname) {
+        return this.getProxy().getPlayer(nickname) != null;
+    }
+
+    @Override
+    public void executeCommand(String command) {
+        this.getProxy().getPluginManager().dispatchCommand(this.getProxy().getConsole(), command);
+    }
+
+    @Override
+    public void announce(String message) {
+        this.getProxy().getPlayers().forEach(player -> {
+            this.audiences.player(player).sendMessage(MiniMessage.miniMessage().deserialize(message));
+        });
+    }
+
+    @Override
     public Configuration getConfiguration() {
-        return null;
+        return this.configuration;
+    }
+
+    @Override
+    public Requester getRequester() {
+        return this.request;
+    }
+
+    @Override
+    public PlatformLogger logger() {
+        return this.logger;
     }
 }

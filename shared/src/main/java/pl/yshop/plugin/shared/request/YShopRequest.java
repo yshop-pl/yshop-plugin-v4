@@ -8,10 +8,13 @@ import okhttp3.Response;
 import pl.yshop.plugin.api.Configuration;
 import pl.yshop.plugin.api.PlatformLogger;
 import pl.yshop.plugin.api.Platform;
+import pl.yshop.plugin.api.request.BaseRequest;
+import pl.yshop.plugin.api.request.RequestException;
+import pl.yshop.plugin.api.request.Requester;
 
 import java.io.IOException;
 
-public class YShopRequest {
+public class YShopRequest implements Requester {
     private final Gson gson = new Gson();
     private final Configuration configuration;
     private final Platform platform;
@@ -28,6 +31,8 @@ public class YShopRequest {
         this.httpClient.dispatcher().executorService().shutdown();
     }
 
+
+    @Override
     public <T> T make(BaseRequest<T> baseRequest) throws RequestException {
         String requestPath = String.format("%s/public/license%s",
                 this.configuration.apiUrl(),

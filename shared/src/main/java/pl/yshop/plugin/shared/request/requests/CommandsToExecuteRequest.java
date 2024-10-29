@@ -2,7 +2,7 @@ package pl.yshop.plugin.shared.request.requests;
 
 import okhttp3.RequestBody;
 import pl.yshop.plugin.shared.entities.Command;
-import pl.yshop.plugin.shared.request.BaseRequest;
+import pl.yshop.plugin.api.request.BaseRequest;
 
 public class CommandsToExecuteRequest implements BaseRequest<Command[]> {
     @Override
