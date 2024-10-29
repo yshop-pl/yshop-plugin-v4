@@ -37,4 +37,5 @@ allprojects {
 dependencies {
     implementation(project(":bukkit"))
     implementation(project(":bungee"))
+    implementation(project(":velocity"))
 }
