@@ -1,6 +1,5 @@
 package pl.yshop.plugin.shared;
 
-import pl.yshop.plugin.commands.PlatformCommandManager;
 import pl.yshop.plugin.shared.commands.AdminCommand;
 import pl.yshop.plugin.api.Platform;
 import pl.yshop.plugin.shared.request.YShopRequest;

@@ -1,6 +1,6 @@
 package pl.yshop.plugin.api;
 
-import pl.yshop.plugin.commands.PlatformCommand;
+import pl.yshop.plugin.api.commands.PlatformCommand;
 
 public abstract class Extension {
     private PlatformLogger logger;

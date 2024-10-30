@@ -2,7 +2,7 @@ package pl.yshop.plugin.bukkit.commands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.yshop.plugin.commands.PlatformSender;
+import pl.yshop.plugin.api.commands.PlatformSender;
 
 import java.util.UUID;
 

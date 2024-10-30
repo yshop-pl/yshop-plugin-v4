@@ -1,3 +1,3 @@
-package pl.yshop.plugin.commands;
+package pl.yshop.plugin.api.commands;
 
 public interface PlatformCommand { }

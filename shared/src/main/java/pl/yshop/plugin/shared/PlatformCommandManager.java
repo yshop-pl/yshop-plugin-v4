@@ -1,7 +1,9 @@
-package pl.yshop.plugin.commands;
+package pl.yshop.plugin.shared;
 
-import pl.yshop.plugin.commands.annotations.Command;
-import pl.yshop.plugin.commands.annotations.Execute;
+import pl.yshop.plugin.api.commands.PlatformCommand;
+import pl.yshop.plugin.api.commands.PlatformSender;
+import pl.yshop.plugin.api.commands.annotations.Command;
+import pl.yshop.plugin.api.commands.annotations.Execute;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

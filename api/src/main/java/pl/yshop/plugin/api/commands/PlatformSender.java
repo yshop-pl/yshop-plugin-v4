@@ -1,4 +1,4 @@
-package pl.yshop.plugin.commands;
+package pl.yshop.plugin.api.commands;
 
 import java.util.UUID;
 

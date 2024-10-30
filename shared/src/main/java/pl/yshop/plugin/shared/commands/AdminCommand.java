@@ -1,9 +1,9 @@
 package pl.yshop.plugin.shared.commands;
 
-import pl.yshop.plugin.commands.PlatformCommand;
-import pl.yshop.plugin.commands.PlatformSender;
-import pl.yshop.plugin.commands.annotations.Command;
-import pl.yshop.plugin.commands.annotations.Execute;
+import pl.yshop.plugin.api.commands.PlatformCommand;
+import pl.yshop.plugin.api.commands.PlatformSender;
+import pl.yshop.plugin.api.commands.annotations.Command;
+import pl.yshop.plugin.api.commands.annotations.Execute;
 import pl.yshop.plugin.shared.Bootstrap;
 
 @Command(name = "yshop")

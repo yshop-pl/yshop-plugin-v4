@@ -4,9 +4,9 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Plugin;
-import pl.yshop.plugin.commands.PlatformCommand;
-import pl.yshop.plugin.commands.PlatformCommandManager;
-import pl.yshop.plugin.commands.PlatformSender;
+import pl.yshop.plugin.api.commands.PlatformCommand;
+import pl.yshop.plugin.shared.PlatformCommandManager;
+import pl.yshop.plugin.api.commands.PlatformSender;
 
 public class BungeeCommandManager extends PlatformCommandManager<CommandSender> {
     private final Plugin plugin;

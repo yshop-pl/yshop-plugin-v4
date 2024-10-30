@@ -1,13 +1,10 @@
 package pl.yshop.plugin.bungee.commands;
 
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.audience.Audiences;
-import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import pl.yshop.plugin.bungee.BungeePlugin;
-import pl.yshop.plugin.commands.PlatformSender;
+import pl.yshop.plugin.api.commands.PlatformSender;
 
 import java.util.UUID;
 

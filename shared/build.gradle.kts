@@ -12,7 +12,6 @@ repositories {
 
 dependencies {
     api(project(":api"))
-    api(project(":commands-api"))
     api("com.squareup.okhttp3:okhttp:4.10.0")
     compileOnly("com.google.code.gson:gson:2.8.6")
 }

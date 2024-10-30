@@ -5,9 +5,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
-import pl.yshop.plugin.commands.PlatformCommand;
-import pl.yshop.plugin.commands.PlatformCommandManager;
-import pl.yshop.plugin.commands.PlatformSender;
+import pl.yshop.plugin.api.commands.PlatformCommand;
+import pl.yshop.plugin.shared.PlatformCommandManager;
+import pl.yshop.plugin.api.commands.PlatformSender;
 
 import java.lang.reflect.Field;
 

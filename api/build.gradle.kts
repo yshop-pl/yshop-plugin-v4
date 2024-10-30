@@ -27,6 +27,5 @@ repositories {
 }
 
 dependencies {
-    api(project(":commands-api"))
     compileOnly("com.squareup.okhttp3:okhttp:4.10.0")
 }

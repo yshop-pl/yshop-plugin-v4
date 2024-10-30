@@ -1,10 +1,13 @@
 package pl.yshop.plugin.bukkit;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.yshop.plugin.bukkit.commands.BukkitCommandManager;
 import pl.yshop.plugin.shared.Bootstrap;
 import pl.yshop.plugin.api.Platform;
+import pl.yshop.plugin.shared.PlatformCommandManager;
+import pl.yshop.plugin.shared.commands.AdminCommand;
 import pl.yshop.plugin.shared.tasks.ExecuteCommandsTask;
 
 public class BukkitPlugin extends JavaPlugin {
@@ -12,10 +15,11 @@ public class BukkitPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
-        Platform platform = new BukkitPlatform(this);
+        PlatformCommandManager<CommandSender> commandManager = new BukkitCommandManager();
+        Platform platform = new BukkitPlatform(this, commandManager);
 
         this.bootstrap = new Bootstrap(platform)
-                .withCommandManager(new BukkitCommandManager())
+                .withCommandManager(commandManager)
                 .enableExtensions(this.getDataFolder())
                 .start();
 

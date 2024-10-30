@@ -38,6 +38,9 @@ public class VelocityPlugin {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         ConfigurationNode node = this.getConfiguration();
+        this.logger.error("=================");
+        this.logger.error(node.getNode("apiKey").getString());
+        this.logger.error("=================");
         Platform platform = new VelocityPlatform(this.proxy, this.logger, node);
 
         this.bootstrap = new Bootstrap(platform)

@@ -1,18 +1,24 @@
 package pl.yshop.plugin.bukkit;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import pl.yshop.plugin.api.Configuration;
 import pl.yshop.plugin.api.Platform;
 import pl.yshop.plugin.api.PlatformLogger;
+import pl.yshop.plugin.api.commands.PlatformCommand;
 import pl.yshop.plugin.api.request.Requester;
+import pl.yshop.plugin.shared.PlatformCommandManager;
 import pl.yshop.plugin.shared.configuration.ConfigProperties;
 import pl.yshop.plugin.shared.request.YShopRequest;
 
 public class BukkitPlatform implements Platform {
     private final Plugin plugin;
-    public BukkitPlatform(final Plugin plugin) {
+    private final PlatformCommandManager<CommandSender> commandManager;
+
+    public BukkitPlatform(final Plugin plugin, PlatformCommandManager<CommandSender> commandManager) {
         this.plugin = plugin;
+        this.commandManager = commandManager;
     }
 
     @Override
@@ -45,6 +51,11 @@ public class BukkitPlatform implements Platform {
         this.plugin.getServer().getOnlinePlayers().forEach(player -> {
             player.sendMessage(message);
         });
+    }
+
+    @Override
+    public void registerCommand(PlatformCommand command) {
+        this.commandManager.register(command);
     }
 
     @Override
