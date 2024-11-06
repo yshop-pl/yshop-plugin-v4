@@ -79,4 +79,9 @@ public class BukkitPlatform implements Platform {
     public Requester getRequester() {
         return new YShopRequest(this);
     }
+
+    @Override
+    public Object plugin() {
+        return this.plugin;
+    }
 }

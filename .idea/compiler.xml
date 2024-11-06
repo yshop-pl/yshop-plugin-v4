@@ -38,7 +38,7 @@
         <module name="yShopPlugin.velocity.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="21">
+    <bytecodeTargetLevel target="16">
       <module name="yShopPlugin.buildSrc" target="21" />
       <module name="yShopPlugin.buildSrc.main" target="21" />
       <module name="yShopPlugin.buildSrc.test" target="21" />

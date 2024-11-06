@@ -11,11 +11,11 @@ public class VelocityConfiguration implements ConfigProperties {
 
     @Override
     public String getString(String key) {
-        return this.root.getString(key);
+        return this.root.getNode(key).getString();
     }
 
     @Override
     public boolean getBoolean(String key) {
-        return Boolean.getBoolean(this.root.getString(key));
+        return this.root.getNode(key).getBoolean();
     }
 }

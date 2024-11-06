@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import pl.yshop.plugin.api.Configuration;
 import pl.yshop.plugin.api.Platform;
 import pl.yshop.plugin.api.PlatformLogger;
+import pl.yshop.plugin.api.commands.PlatformCommand;
 import pl.yshop.plugin.api.request.Requester;
 import pl.yshop.plugin.shared.configuration.ConfigProperties;
 import pl.yshop.plugin.shared.request.YShopRequest;
@@ -24,12 +25,12 @@ public class VelocityPlatform implements Platform {
 
     @Override
     public String version() {
-        return "";
+        return "1.2";
     }
 
     @Override
     public String engine() {
-        return "";
+        return "Velocity";
     }
 
     @Override
@@ -55,6 +56,11 @@ public class VelocityPlatform implements Platform {
     }
 
     @Override
+    public void registerCommand(PlatformCommand command) {
+
+    }
+
+    @Override
     public Configuration getConfiguration() {
         ConfigProperties properties = new VelocityConfiguration(this.configurationNode);
         return new Configuration(
@@ -69,6 +75,11 @@ public class VelocityPlatform implements Platform {
     @Override
     public Requester getRequester() {
         return new YShopRequest(this);
+    }
+
+    @Override
+    public Object plugin() {
+        return null;
     }
 
     @Override

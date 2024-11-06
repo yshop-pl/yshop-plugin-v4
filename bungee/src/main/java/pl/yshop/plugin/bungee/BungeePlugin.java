@@ -1,10 +1,12 @@
 package pl.yshop.plugin.bungee;
 
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Plugin;
 import pl.yshop.plugin.api.Platform;
 import pl.yshop.plugin.bungee.commands.BungeeCommandManager;
 import pl.yshop.plugin.shared.Bootstrap;
+import pl.yshop.plugin.shared.PlatformCommandManager;
 import pl.yshop.plugin.shared.tasks.ExecuteCommandsTask;
 
 import java.util.concurrent.TimeUnit;
@@ -16,9 +18,10 @@ public class BungeePlugin extends Plugin {
     @Override
     public void onEnable() {
         audiences = BungeeAudiences.create(this);
-        Platform platform = new BungeePlatform(this);
+        PlatformCommandManager<CommandSender> commandManager = new BungeeCommandManager(this);
+        Platform platform = new BungeePlatform(this, commandManager);
         this.bootstrap = new Bootstrap(platform)
-                .withCommandManager(new BungeeCommandManager(this))
+                .withCommandManager(commandManager)
                 .enableExtensions(this.getDataFolder())
                 .start();
 

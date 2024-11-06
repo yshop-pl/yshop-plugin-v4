@@ -17,7 +17,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "pl.yshop.plugin"
             artifactId = "api"
-            version = "4.0.2"
+            version = "4.0.4"
             from(components["java"])
         }
     }

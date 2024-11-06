@@ -17,5 +17,7 @@ public interface Platform {
     Configuration getConfiguration();
     Requester getRequester();
 
+    Object plugin();
+
     PlatformLogger logger();
 }

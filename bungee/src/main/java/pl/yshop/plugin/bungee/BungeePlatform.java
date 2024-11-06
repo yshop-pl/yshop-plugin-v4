@@ -2,23 +2,28 @@ package pl.yshop.plugin.bungee;
 
 import net.kyori.adventure.platform.bungeecord.BungeeAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Plugin;
 import pl.yshop.plugin.api.Configuration;
 import pl.yshop.plugin.api.Platform;
 import pl.yshop.plugin.api.PlatformLogger;
+import pl.yshop.plugin.api.commands.PlatformCommand;
 import pl.yshop.plugin.api.request.Requester;
 import pl.yshop.plugin.bungee.configuration.BungeeConfigurationManager;
 import pl.yshop.plugin.bungee.configuration.BungeeConfiguration;
+import pl.yshop.plugin.shared.PlatformCommandManager;
 import pl.yshop.plugin.shared.configuration.ConfigProperties;
 import pl.yshop.plugin.shared.request.YShopRequest;
 
 public class BungeePlatform implements Platform {
     private final Plugin plugin;
     private final BungeeAudiences audiences;
+    private final PlatformCommandManager<CommandSender> commandManager;
 
-    public BungeePlatform(Plugin plugin) {
+    public BungeePlatform(Plugin plugin, PlatformCommandManager<CommandSender> commandManager) {
         this.plugin = plugin;
         this.audiences = BungeeAudiences.create(plugin);
+        this.commandManager = commandManager;
     }
 
     @Override
@@ -54,6 +59,11 @@ public class BungeePlatform implements Platform {
     }
 
     @Override
+    public void registerCommand(PlatformCommand command) {
+        this.commandManager.register(command);
+    }
+
+    @Override
     public Configuration getConfiguration() {
         BungeeConfigurationManager configManager = new BungeeConfigurationManager(this.plugin);
         configManager.loadConfigurationFile();
@@ -70,6 +80,11 @@ public class BungeePlatform implements Platform {
     @Override
     public Requester getRequester() {
         return new YShopRequest(this);
+    }
+
+    @Override
+    public Object plugin() {
+        return this.plugin;
     }
 
     @Override

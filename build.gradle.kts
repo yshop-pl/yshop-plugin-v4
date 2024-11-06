@@ -19,10 +19,14 @@ allprojects {
     group = "pl.yshop.plugin"
     version = "4.0.0"
 
+    java.sourceCompatibility = JavaVersion.VERSION_16
+    java.targetCompatibility = JavaVersion.VERSION_16
+
     repositories {
         mavenCentral()
         maven("https://oss.sonatype.org/content/groups/public/")
         maven("https://repo.panda-lang.org/releases")
+        maven("https://repo.xenondevs.xyz/releases")
     }
 
     tasks {
@@ -38,4 +42,5 @@ dependencies {
     implementation(project(":bukkit"))
     implementation(project(":bungee"))
     implementation(project(":velocity"))
+    implementation("xyz.xenondevs.invui:invui:1.39")
 }
